@@ -1,0 +1,447 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Me — Kendryx Soriano</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font: 'Neue Haas Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --nav-h: 64px;
+      --black: #111;
+      --grey: #999;
+    }
+
+    body { font-family: var(--font); color: var(--black); background: #fff; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.07); z-index: 100;
+    }
+    .nav-logo { font-size: 25px; font-weight: 600; letter-spacing: -0.02em; color: var(--black); text-decoration: none; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
+    .nav-logo:hover { color: var(--grey); transform: translateY(-2px); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-family: "neue-haas-grotesk-display-pr", sans-serif; font-size: 13px; font-weight: 500; font-style: normal; letter-spacing: 0.05em; color: var(--black); text-decoration: none; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
+    .nav-links a:hover { color: var(--grey); transform: translateY(-3px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--black); transition: all 0.3s ease; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); padding: 24px 40px 32px; z-index: 99; border-bottom: 1px solid rgba(0,0,0,0.07); flex-direction: column; gap: 24px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 18px; font-weight: 300; color: var(--black); text-decoration: none; letter-spacing: 0.01em; transition: color 0.3s ease; }
+    .mobile-menu a:hover { color: var(--grey); }
+
+    /* ABOUT LAYOUT */
+    .about-page { padding-top: var(--nav-h); display: flex; flex-direction: column; min-height: 100vh; }
+
+    .about-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+      padding: 80px 60px;
+      align-items: start;
+    }
+
+    .about-left {
+      padding-right: 80px;
+      display: flex;
+      flex-direction: column;
+      min-height: 480px;
+    }
+
+    .about-heading {
+      font-size: clamp(24px, 2.8vw, 36px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 36px;
+    }
+
+    .about-body {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: rgba(0,0,0,0.75);
+      text-align: justify;
+      max-width: 480px;
+      margin-top: 32px;
+    }
+
+    .about-cta {
+      font-size: clamp(22px, 2.6vw, 34px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-top: 36px;
+    }
+    .about-cta-link {
+      display: inline-block;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .about-cta-link:hover {
+      color: var(--grey);
+      transform: translateY(-3px);
+    }
+
+    .about-right {}
+
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background-image: url('about-photo.jpg');
+      background-size: 85%;
+      background-position: center top;
+      background-repeat: no-repeat;
+      display: block;
+    }
+
+    /* FOOTER */
+    footer { padding: 28px 40px; border-top: 1px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .footer-copy { font-size: 12px; color: var(--grey); letter-spacing: 0.01em; }
+    .footer-socials { display: flex; gap: 16px; align-items: center; }
+    .footer-socials a { display: inline-flex; align-items: center; color: var(--grey); transition: color 0.3s ease, transform 0.3s ease; }
+    .footer-socials a:hover { color: var(--black); transform: translateY(-3px); }
+    .footer-socials svg { width: 20px; height: 20px; }
+    .footer-email { font-size: 12px; color: var(--grey); text-decoration: none; letter-spacing: 0.01em; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
+    .footer-email:hover { color: var(--black); transform: translateY(-3px); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .about-main { grid-template-columns: 1fr; padding: 60px 40px; gap: 48px; }
+      .about-left { padding-right: 0; min-height: auto; }
+      .about-cta { margin-top: 48px; }
+      .about-photo { aspect-ratio: 4/3; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .about-main { padding: 48px 20px; }
+      footer { flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 28px 20px; }
+    }
+  
+    /* ── MODAL ───────────────────────────────────── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: #fff;
+      width: 100%;
+      max-width: 560px;
+      margin: 20px;
+      padding: 56px 52px 48px;
+      position: relative;
+      transform: translateY(24px);
+      transition: transform 0.35s ease;
+    }
+    .modal-overlay.open .modal {
+      transform: translateY(0);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 22px;
+      color: var(--grey);
+      line-height: 1;
+      transition: color 0.2s ease, transform 0.2s ease;
+      font-family: var(--font);
+    }
+    .modal-close:hover { color: var(--black); transform: rotate(90deg); }
+
+    .modal-label {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 16px;
+    }
+
+    .modal-heading {
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 40px;
+    }
+
+    .modal-form {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-field label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--grey);
+    }
+
+    .form-field input,
+    .form-field textarea {
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--black);
+      background: none;
+      border: none;
+      border-bottom: 1px solid rgba(0,0,0,0.2);
+      padding: 8px 0;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s ease;
+      resize: none;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+      border-bottom-color: var(--black);
+    }
+
+    .form-field input::placeholder,
+    .form-field textarea::placeholder {
+      color: rgba(0,0,0,0.25);
+    }
+
+    .form-field textarea {
+      min-height: 100px;
+    }
+
+    .modal-submit {
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: var(--font);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--black);
+      border: none;
+      padding: 16px 24px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .modal-submit:hover { background: #333; transform: translateY(-2px); }
+
+    @media (max-width: 480px) {
+      .modal { padding: 48px 28px 40px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── DESIGN TOUCHUP ─────────────────────────── */
+    .page-veil { position: fixed; inset: 0; background: #fff; z-index: 9990; pointer-events: none; animation: veilOut 0.55s ease forwards; }
+    @keyframes veilOut { to { opacity: 0; visibility: hidden; } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+<div class="page-veil"></div>
+
+<nav>
+  <a class="nav-logo" href="index.html">Kendryx Soriano</a>
+  <ul class="nav-links">
+    <li><a href="works.html">Works</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="about.html">About Me</a></li>
+    <li><a href="resume.html">Résumé</a></li>
+    <li><a href="#" data-modal>Let's Talk</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="works.html">Works</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="about.html">About Me</a>
+  <a href="resume.html">Résumé</a>
+  <a href="#" data-modal>Let's Talk</a>
+</div>
+
+<div class="about-page">
+  <div class="about-main">
+
+    <div class="about-left">
+      <div>
+        <h1 class="about-heading">Hi, I'm Kenny, an aspiring architectural designer based in San Francisco.</h1>
+        <p class="about-body">Born and raised in Manila, Philippines, I studied architecture at the Academy of Art University in San Francisco while competing in collegiate soccer. My work is driven by collaboration, curiosity, and the belief that meaningful architecture begins with understanding the people it is designed for. <em>Good design is progressive. Great design is inclusive.</em></p>
+      </div>
+      <p class="about-cta">Let's get to know each other. <span class="about-cta-link" data-modal>Get in touch.</span></p>
+    </div>
+
+    <div class="about-right">
+      <div class="about-photo"></div>
+    </div>
+
+  </div>
+
+  <footer>
+    <span class="footer-copy">© 2026 Kendryx Soriano</span>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/kendryxsoriano/" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a href="https://www.linkedin.com/in/kendryxsoriano" target="_blank" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="3"/>
+          <line x1="8" y1="10" x2="8" y2="17"/>
+          <line x1="8" y1="7" x2="8" y2="7.5"/>
+          <line x1="12" y1="17" x2="12" y2="13"/>
+          <path d="M12 13a3 3 0 0 1 6 0v4"/>
+        </svg>
+      </a>
+    </div>
+    <a class="footer-email" href="mailto:kendryxsoriano@gmail.com">kendryxsoriano@gmail.com</a>
+  </footer>
+</div>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  // Modal logic
+  function openModal() {
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // Wire up all Let's Talk / Get in touch triggers
+  document.querySelectorAll('[data-modal]').forEach(el => {
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      openModal();
+    });
+  });
+
+</script>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
+    <p class="modal-label">Contact</p>
+    <h2 class="modal-heading">Let's get to know each other.<br>Get in touch.</h2>
+    <form class="modal-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" placeholder="Jane" required />
+        </div>
+        <div class="form-field">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" placeholder="Doe" required />
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+      </div>
+      <div class="form-field">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" placeholder="What's this about?" />
+      </div>
+      <div class="form-field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell me about your project, idea, or just say hello..." required></textarea>
+      </div>
+      <button type="submit" class="modal-submit">
+        Send Message <span>&#x2192;</span>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  var skip = ['nav', '.mobile-menu', '.modal-overlay', '.hero'];
+  var sel = 'h1, h2, h3, p, .section-label, .work-card, .portfolio-item, .about-strip-label, .about-strip-location, .principle-row, .btn, .statement-label, .statement-text, .meta-row, .slide-caption, .back-link, .next-link, .download-btn, .resume-image-box, .issuu-container';
+  document.querySelectorAll(sel).forEach(function (el) {
+    if (skip.some(function (s) { return el.closest(s); })) return;
+    el.classList.add('reveal');
+  });
+  var io = new IntersectionObserver(function (entries) {
+    var visible = entries.filter(function (e) { return e.isIntersecting; });
+    visible.sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+    visible.forEach(function (entry, i) {
+      entry.target.style.transitionDelay = (i * 150) + 'ms';
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+})();
+</script>
+</body>
+</html>

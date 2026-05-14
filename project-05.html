@@ -1,0 +1,1097 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>05/ The Hex — Kendryx Soriano</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --font: 'Neue Haas Grotesk', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --nav-h: 64px;
+      --black: #111;
+      --grey: #999;
+    }
+
+    body { font-family: var(--font); color: var(--black); background: #fff; overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.07); z-index: 100;
+    }
+    .nav-logo { font-size: 25px; font-weight: 700; letter-spacing: -0.02em; color: var(--black); text-decoration: none; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
+    .nav-logo:hover { color: var(--grey); transform: translateY(-2px); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { font-family: "neue-haas-grotesk-display-pr", sans-serif; font-size: 13px; font-weight: 500; font-style: normal; letter-spacing: 0.05em; color: var(--black); text-decoration: none; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
+    .nav-links a:hover { color: var(--grey); transform: translateY(-3px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--black); transition: all 0.3s ease; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); padding: 24px 40px 32px; z-index: 99; border-bottom: 1px solid rgba(0,0,0,0.07); flex-direction: column; gap: 24px; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-size: 18px; font-weight: 300; color: var(--black); text-decoration: none; letter-spacing: 0.01em; transition: color 0.3s ease; }
+    .mobile-menu a:hover { color: var(--grey); }
+
+    /* PROJECT HEADER */
+    .project-header {
+      padding: calc(var(--nav-h) + 72px) 160px 48px;
+      max-width: 1200px;
+    }
+
+    .project-title {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .project-caption {
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--black);
+      letter-spacing: -0.01em;
+    }
+
+    /* INFO SECTION */
+    .project-info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 80px;
+      padding: 64px 160px 60px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      margin-top: 48px;
+    }
+
+    .statement-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--black);
+      margin-bottom: 14px;
+    }
+
+    .statement-text {
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: rgba(0,0,0,0.75);
+      text-align: justify;
+      max-width: 480px;
+    }
+
+    /* METADATA */
+    .project-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-top: 28px;
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+    .meta-row:first-child { border-top: 1px solid rgba(0,0,0,0.08); }
+
+    .meta-key {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--grey);
+      letter-spacing: 0.02em;
+    }
+
+    .meta-val {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--black);
+      letter-spacing: 0.01em;
+    }
+
+    /* IMAGE BOX */
+    .comic-image-box {
+      position: relative;
+      max-width: 55%;
+      aspect-ratio: 3/2;
+      margin: 0 auto 64px;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+    .comic-image-box img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* SLIDESHOW */
+    .slideshow-wrapper {
+      margin: 0 auto 0;
+      position: relative;
+      background: #f0eeec;
+      overflow: hidden;
+      user-select: none;
+      max-width: 55%;
+    }
+    .slideshow-track {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .slide {
+      min-width: 100%;
+      aspect-ratio: 3/2;
+      background: #e4e0dc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .slide img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    .slide-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(80,80,80,0.55);
+      backdrop-filter: blur(4px);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      z-index: 10;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .slide-btn:hover { background: rgba(30,30,30,0.75); transform: translateY(-50%) scale(1.08); }
+    .slide-btn svg { width: 18px; height: 18px; }
+    .slide-prev { left: 20px; }
+    .slide-next { right: 20px; }
+    .slide-expand {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(80,80,80,0.55);
+      backdrop-filter: blur(4px);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      z-index: 10;
+      transition: background 0.2s ease;
+    }
+    .slide-expand:hover { background: rgba(30,30,30,0.75); }
+    .slide-expand svg { width: 16px; height: 16px; }
+    .slide-counter {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+    .slide-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .slide-dot.active { background: #fff; transform: scale(1.3); }
+    .slide-caption {
+      max-width: 55%;
+      margin: 0 auto 64px;
+      padding: 14px 4px 0;
+      min-height: 40px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--grey);
+      letter-spacing: 0.01em;
+      line-height: 1.5;
+    }
+
+    /* FLIPBOOK */
+    .flipbook-scene {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 auto 64px;
+    }
+
+    /* Page content inside StPageFlip */
+    .stf-page-content {
+      background: #fff;
+      overflow: hidden;
+    }
+    .stf-page-content img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .comic-controls {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .comic-ctrl-btn {
+      background: transparent;
+      color: #bbb;
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s ease, border-color 0.2s ease;
+      flex-shrink: 0;
+    }
+    .comic-ctrl-btn:hover { color: #555; border-color: rgba(0,0,0,0.3); }
+    .comic-ctrl-btn:disabled { color: #ddd; border-color: rgba(0,0,0,0.06); cursor: default; }
+    .comic-ctrl-btn svg { width: 12px; height: 12px; stroke-width: 1.5; }
+
+    .comic-page-num {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--grey);
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* Zoom overlay */
+    #flipbookOverlay, #flipbookOverlay2 {
+      position: fixed; inset: 0;
+      background: rgba(10,10,10,0.96);
+      z-index: 400;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 28px;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    #flipbookOverlay.open, #flipbookOverlay2.open { opacity: 1; pointer-events: all; }
+    #flipbookOverlayClose, #flipbookOverlayClose2 {
+      position: absolute; top: 22px; right: 28px;
+      background: none; border: none;
+      color: rgba(255,255,255,0.55); font-size: 28px;
+      cursor: pointer; font-family: var(--font);
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+    #flipbookOverlayClose:hover, #flipbookOverlayClose2:hover { color: #fff; transform: rotate(90deg); }
+    #flipbookZoom, #flipbookZoom2 { cursor: grab; }
+    #flipbookZoom:active, #flipbookZoom2:active { cursor: grabbing; }
+    #flipbookZoom .stf-page-content, #flipbookZoom2 .stf-page-content { background: #fff; overflow: hidden; }
+    #flipbookZoom .stf-page-content img, #flipbookZoom2 .stf-page-content img {
+      width: 100%; height: 100%; object-fit: contain;
+      display: block; user-select: none; pointer-events: none;
+    }
+    #flipbookOverlay .comic-controls .comic-ctrl-btn, #flipbookOverlay2 .comic-controls .comic-ctrl-btn { color: rgba(255,255,255,0.45); border-color: rgba(255,255,255,0.2); }
+    #flipbookOverlay .comic-controls .comic-ctrl-btn:hover, #flipbookOverlay2 .comic-controls .comic-ctrl-btn:hover { color: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.5); }
+    #flipbookOverlay .comic-controls .comic-ctrl-btn:disabled, #flipbookOverlay2 .comic-controls .comic-ctrl-btn:disabled { color: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.08); }
+    #flipbookOverlay .comic-page-num, #flipbookOverlay2 .comic-page-num { color: rgba(255,255,255,0.45); }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 300;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+    .lightbox img { max-width: 90vw; max-height: 90vh; object-fit: contain; }
+    .lightbox-close {
+      position: absolute; top: 20px; right: 28px;
+      background: none; border: none; color: #fff; font-size: 28px;
+      cursor: pointer; font-family: var(--font);
+      transition: transform 0.2s ease;
+    }
+    .lightbox-close:hover { transform: rotate(90deg); }
+
+    /* UNC55 FULL-WIDTH IMAGE */
+    .unc55-wrap {
+      width: 100%;
+      overflow: hidden;
+      margin-bottom: 80px;
+      cursor: zoom-in;
+    }
+    .unc55-wrap img {
+      width: 100%;
+      display: block;
+      margin-top: -3.2%;
+      margin-bottom: -3.2%;
+      transition: opacity 0.2s ease;
+      pointer-events: none;
+    }
+    .unc55-wrap:hover img { opacity: 0.88; }
+
+    /* SIDE-BY-SIDE IMAGES */
+    .duo-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      padding: 0 0px 64px;
+      transform: scale(1.05);
+      transform-origin: top center;
+    }
+    .duo-images img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      cursor: zoom-in;
+      transition: opacity 0.2s ease;
+    }
+    .duo-images img:hover { opacity: 0.88; }
+
+    /* PROJECT NAV */
+    .project-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 80px 160px 64px;
+    }
+    .back-link {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .back-link:hover { color: var(--black); transform: translateX(-4px); }
+    .next-link {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--grey);
+      text-decoration: none;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .next-link:hover { color: var(--black); transform: translateX(4px); }
+
+    /* FOOTER */
+    footer { padding: 28px 40px; border-top: 1px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .footer-copy { font-size: 12px; color: var(--grey); letter-spacing: 0.01em; }
+    .footer-socials { display: flex; gap: 16px; align-items: center; }
+    .footer-socials a { display: inline-flex; align-items: center; color: var(--grey); transition: color 0.3s ease, transform 0.3s ease; }
+    .footer-socials a:hover { color: var(--black); transform: translateY(-3px); }
+    .footer-socials svg { width: 20px; height: 20px; }
+    .footer-email { font-size: 12px; color: var(--grey); text-decoration: none; letter-spacing: 0.01em; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
+    .footer-email:hover { color: var(--black); transform: translateY(-3px); }
+
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .project-header { padding: calc(var(--nav-h) + 48px) 40px 32px; }
+      .project-info { grid-template-columns: 1fr; padding: 48px 40px 48px; gap: 40px; }
+      .project-nav { padding: 0 40px 40px; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .project-header { padding: calc(var(--nav-h) + 36px) 20px 24px; }
+      .project-info { padding: 36px 20px; }
+      .project-nav { padding: 0 20px 36px; }
+      footer { flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 28px 20px; }
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: #fff; width: 100%; max-width: 560px; margin: 20px;
+      padding: 56px 52px 48px; position: relative;
+      transform: translateY(24px); transition: transform 0.35s ease;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-close { position: absolute; top: 24px; right: 28px; background: none; border: none; cursor: pointer; font-size: 22px; color: var(--grey); line-height: 1; transition: color 0.2s ease, transform 0.2s ease; font-family: var(--font); }
+    .modal-close:hover { color: var(--black); transform: rotate(90deg); }
+    .modal-label { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--grey); margin-bottom: 16px; }
+    .modal-heading { font-size: clamp(22px, 3vw, 30px); font-weight: 300; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 40px; }
+    .modal-form { display: flex; flex-direction: column; gap: 24px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-field { display: flex; flex-direction: column; gap: 8px; }
+    .form-field label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); }
+    .form-field input, .form-field textarea { font-family: var(--font); font-size: 14px; font-weight: 400; color: var(--black); background: none; border: none; border-bottom: 1px solid rgba(0,0,0,0.2); padding: 8px 0; outline: none; width: 100%; transition: border-color 0.2s ease; resize: none; }
+    .form-field input:focus, .form-field textarea:focus { border-bottom-color: var(--black); }
+    .form-field input::placeholder, .form-field textarea::placeholder { color: rgba(0,0,0,0.25); }
+    .form-field textarea { min-height: 100px; }
+    .modal-submit { margin-top: 8px; display: inline-flex; align-items: center; justify-content: space-between; gap: 16px; font-family: var(--font); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: var(--black); border: none; padding: 16px 24px; cursor: pointer; width: 100%; transition: background 0.3s ease, transform 0.3s ease; }
+    .modal-submit:hover { background: #333; transform: translateY(-2px); }
+    @media (max-width: 480px) {
+      .modal { padding: 48px 28px 40px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── DESIGN TOUCHUP ─────────────────────────── */
+    .page-veil { position: fixed; inset: 0; background: #fff; z-index: 9990; pointer-events: none; animation: veilOut 0.55s ease forwards; }
+    @keyframes veilOut { to { opacity: 0; visibility: hidden; } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+<div class="page-veil"></div>
+
+<nav>
+  <a class="nav-logo" href="index.html">Kendryx Soriano</a>
+  <ul class="nav-links">
+    <li><a href="works.html">Works</a></li>
+    <li><a href="portfolio.html">Portfolio</a></li>
+    <li><a href="about.html">About Me</a></li>
+    <li><a href="resume.html">Résumé</a></li>
+    <li><a href="#" data-modal>Let's Talk</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="works.html">Works</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="about.html">About Me</a>
+  <a href="resume.html">Résumé</a>
+  <a href="#" data-modal>Let's Talk</a>
+</div>
+
+<!-- PROJECT HEADER -->
+<div class="project-header">
+  <h1 class="project-title">05/ The Hex</h1>
+  <p class="project-caption">Building beyond shelter</p>
+</div>
+
+<!-- INFO -->
+<div class="project-info">
+  <div class="project-statement">
+    <p class="statement-label">Statement</p>
+    <p class="statement-text">The Hex is inspired by the real-life experiences of an individual who faced homelessness. This narrative served as the foundation for creating a user profile for an Individual Guerilla Habitation Unit (IgHU). From this initial design, programmatic needs were assessed and expanded to develop multiple units, which were then combined into a cohesive structure to serve as a homeless shelter in downtown Oakland.<br><br>The shelter's design integrates both immediate necessities and long-term support services, including laundry rooms, clinic spaces, and career services. Communal areas are also incorporated to foster a sense of community and collaboration. The building's program and structure were communicated through a series of graphic comics, offering a visual narrative to complement the architectural concept.</p>
+  </div>
+  <div class="project-meta">
+    <div class="meta-row">
+      <span class="meta-key">Course</span>
+      <span class="meta-val">ARH 315: Advocacy in Design</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-key">Instructor</span>
+      <span class="meta-val">Doron Serban</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-key">Semester</span>
+      <span class="meta-val">Spring 2022</span>
+    </div>
+    <div class="meta-row">
+      <span class="meta-key">Site</span>
+      <span class="meta-val">Oakland, California, US</span>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGE BOX -->
+<div class="comic-image-box" id="intangiblesBox">
+  <img src="images/projects/Intangibles.jpg" alt="Intangibles" />
+</div>
+
+<!-- FLIPBOOK -->
+<div class="flipbook-scene" style="margin-bottom: 16px;">
+    <div id="flipbook"></div>
+    <div class="comic-controls">
+      <button class="comic-ctrl-btn" id="comicPrev" aria-label="Previous page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="comic-page-num" id="comicPageNum"></span>
+      <button class="comic-ctrl-btn" id="comicNext" aria-label="Next page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <button class="comic-ctrl-btn" id="comicMaximize" aria-label="Expand" title="Expand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+<!-- FLIPBOOK ZOOM OVERLAY -->
+<div id="flipbookOverlay">
+  <button id="flipbookOverlayClose" aria-label="Close">&#x2715;</button>
+  <div id="flipbookZoom"></div>
+  <div class="comic-controls">
+    <button class="comic-ctrl-btn" id="zoomPrev" aria-label="Previous page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <span class="comic-page-num" id="zoomPageNum">1 / 25</span>
+    <button class="comic-ctrl-btn" id="zoomNext" aria-label="Next page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+
+
+<!-- SIDE-BY-SIDE IMAGES -->
+<div class="duo-images">
+  <img src="images/covers/13.png" alt="" id="duoImg1" />
+  <img src="images/covers/14.png" alt="" id="duoImg2" />
+</div>
+
+<!-- UNC55 FULL-WIDTH -->
+<div class="unc55-wrap" id="unc55Box">
+  <img src="images/unc/unc55.jpg" alt="" />
+</div>
+
+<!-- FLIPBOOK 2 -->
+<div class="flipbook-scene">
+    <div id="flipbook2"></div>
+    <div class="comic-controls">
+      <button class="comic-ctrl-btn" id="comicPrev2" aria-label="Previous page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span class="comic-page-num" id="comicPageNum2"></span>
+      <button class="comic-ctrl-btn" id="comicNext2" aria-label="Next page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+      <button class="comic-ctrl-btn" id="comicMaximize2" aria-label="Expand" title="Expand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+<!-- SLIDESHOW BOTTOM -->
+<div class="slideshow-wrapper">
+  <div class="slideshow-track" id="slideTrack2">
+    <div class="slide" data-caption="Site Plan">
+      <img src="images/projects/05-the-hex/Site%20Plan.jpg" alt="Site Plan" />
+    </div>
+    <div class="slide" data-caption="Ground Floor Plan">
+      <img src="images/projects/05-the-hex/1F.jpg" alt="Ground Floor Plan" />
+    </div>
+    <div class="slide" data-caption="Second Floor Plan">
+      <img src="images/projects/05-the-hex/2F.jpg" alt="Second Floor Plan" />
+    </div>
+    <div class="slide" data-caption="Third Floor Plan">
+      <img src="images/projects/05-the-hex/3F.jpg" alt="Third Floor Plan" />
+    </div>
+    <div class="slide" data-caption="Roof Plan">
+      <img src="images/projects/05-the-hex/4F.jpg" alt="Roof Plan" />
+    </div>
+    <div class="slide" data-caption="Short Section">
+      <img src="images/projects/05-the-hex/Short%20Section.jpg" alt="Short Section" />
+    </div>
+    <div class="slide" data-caption="Long Section">
+      <img src="images/projects/05-the-hex/Long%20Section.jpg" alt="Long Section" />
+    </div>
+  </div>
+  <button class="slide-btn slide-prev" id="slidePrev2" aria-label="Previous">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="slide-btn slide-next" id="slideNext2" aria-label="Next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <button class="slide-expand" id="slideExpand2" aria-label="Expand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+  </button>
+  <div class="slide-counter" id="slideDots2"></div>
+</div>
+<div class="slide-caption" id="slideCaption2"></div>
+
+<div class="project-nav">
+  <a class="back-link" href="works.html">← Back to Works</a>
+  <a class="next-link" href="project-06.html">Next Project →</a>
+</div>
+
+<!-- FLIPBOOK 2 ZOOM OVERLAY -->
+<div id="flipbookOverlay2">
+  <button id="flipbookOverlayClose2" aria-label="Close">&#x2715;</button>
+  <div id="flipbookZoom2"></div>
+  <div class="comic-controls">
+    <button class="comic-ctrl-btn" id="zoomPrev2" aria-label="Previous page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <span class="comic-page-num" id="zoomPageNum2">1 / 10</span>
+    <button class="comic-ctrl-btn" id="zoomNext2" aria-label="Next page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&#x2715;</button>
+  <img id="lightboxImg" src="" alt="" />
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-copy">© 2026 Kendryx Soriano</span>
+  <div class="footer-socials">
+    <a href="https://www.instagram.com/kendryxsoriano/" target="_blank" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+        <circle cx="12" cy="12" r="4"/>
+        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+      </svg>
+    </a>
+    <a href="https://www.linkedin.com/in/kendryxsoriano" target="_blank" aria-label="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="2" width="20" height="20" rx="3"/>
+        <line x1="8" y1="10" x2="8" y2="17"/>
+        <line x1="8" y1="7" x2="8" y2="7.5"/>
+        <line x1="12" y1="17" x2="12" y2="13"/>
+        <path d="M12 13a3 3 0 0 1 6 0v4"/>
+      </svg>
+    </a>
+  </div>
+  <a class="footer-email" href="mailto:kendryxsoriano@gmail.com">kendryxsoriano@gmail.com</a>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
+    <p class="modal-label">Contact</p>
+    <h2 class="modal-heading">Let's get to know each other.<br>Get in touch.</h2>
+    <form class="modal-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-field">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" placeholder="Jane" required />
+        </div>
+        <div class="form-field">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" name="lastName" placeholder="Doe" required />
+        </div>
+      </div>
+      <div class="form-field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+      </div>
+      <div class="form-field">
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" placeholder="What's this about?" />
+      </div>
+      <div class="form-field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell me about your project, idea, or just say hello..." required></textarea>
+      </div>
+      <button type="submit" class="modal-submit">Send Message <span>&#x2192;</span></button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  var skip = ['nav', '.mobile-menu', '.modal-overlay', '.hero'];
+  var sel = 'h1, h2, h3, p, .section-label, .work-card, .portfolio-item, .about-strip-label, .about-strip-location, .principle-row, .btn, .statement-label, .statement-text, .project-meta, .slide-caption, .back-link, .next-link, .download-btn, .resume-image-box, .issuu-container, .slideshow-wrapper, .comic-image-box, .duo-images, .unc55-wrap, .flipbook-scene';
+  document.querySelectorAll(sel).forEach(function (el) {
+    if (skip.some(function (s) { return el.closest(s); })) return;
+    el.classList.add('reveal');
+  });
+  var io = new IntersectionObserver(function (entries) {
+    var visible = entries.filter(function (e) { return e.isIntersecting; });
+    visible.sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+    visible.forEach(function (entry, i) {
+      entry.target.style.transitionDelay = (i * 150) + 'ms';
+      entry.target.classList.add('in');
+      io.unobserve(entry.target);
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+})();
+</script>
+<script src="https://unpkg.com/page-flip/dist/js/page-flip.browser.js"></script>
+<script>
+  // NAV
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+
+  // SLIDESHOW 2 (bottom)
+  const slideTrack2 = document.getElementById('slideTrack2');
+  const slideItems2 = slideTrack2.querySelectorAll('.slide');
+  const slideDotsContainer2 = document.getElementById('slideDots2');
+  let slideCurrent2 = 0;
+
+  slideItems2.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => slideGoTo2(i));
+    slideDotsContainer2.appendChild(dot);
+  });
+
+  function slideGoTo2(n) {
+    slideCurrent2 = (n + slideItems2.length) % slideItems2.length;
+    slideTrack2.style.transform = `translateX(-${slideCurrent2 * 100}%)`;
+    slideDotsContainer2.querySelectorAll('.slide-dot').forEach((d, i) => d.classList.toggle('active', i === slideCurrent2));
+    document.getElementById('slideCaption2').textContent = slideItems2[slideCurrent2].dataset.caption || '';
+  }
+
+  document.getElementById('slidePrev2').addEventListener('click', () => slideGoTo2(slideCurrent2 - 1));
+  document.getElementById('slideNext2').addEventListener('click', () => slideGoTo2(slideCurrent2 + 1));
+  document.getElementById('slideExpand2').addEventListener('click', () => {
+    const img = slideItems2[slideCurrent2].querySelector('img');
+    if (img) openLightbox(img.src);
+  });
+
+  // COMIC BOOK — StPageFlip (realistic page-curl engine)
+  const comicPages = [
+    'images/projects/05-oakland-homeless/module5/Title%20Page.jpg',
+    'images/projects/05-oakland-homeless/module5/Page_0.jpg',
+    'images/projects/05-oakland-homeless/module5/IMG_0151.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0152.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0153.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0154.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0155.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0156.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0157.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0158.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0159.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0160.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0161.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0162.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0163.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0164.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0165.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0166.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0167.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0168.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0169.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0170.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0171.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0172.JPG',
+    'images/projects/05-oakland-homeless/module5/IMG_0173.JPG',
+  ];
+
+  const comicPageNum = document.getElementById('comicPageNum');
+  const comicPrevBtn = document.getElementById('comicPrev');
+  const comicNextBtn = document.getElementById('comicNext');
+  const flipbookEl   = document.getElementById('flipbook');
+
+  // Build DOM pages for loadFromHTML (preserves object-fit: contain)
+  comicPages.forEach((src, i) => {
+    const page = document.createElement('div');
+    page.className = 'stf-page-content';
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Comic page ' + (i + 1);
+    img.draggable = false;
+    page.appendChild(img);
+    flipbookEl.appendChild(page);
+  });
+
+  let currentPageIdx = 0;
+  let zoomFlip = null;
+
+  const pageFlip = new St.PageFlip(flipbookEl, {
+    width:               353,
+    height:              529,
+    size:                'fixed',
+    drawShadow:          true,
+    flippingTime:        1200,
+    usePortrait:         true,
+    showCover:           false,
+    startZIndex:         0,
+    maxShadowOpacity:    0.18,
+    mobileScrollSupport: false,
+    swipeDistance:       20,
+    clickEventForward:   true,
+  });
+
+  pageFlip.loadFromHTML(flipbookEl.querySelectorAll('.stf-page-content'));
+
+  function updateControls(idx) {
+    comicPageNum.textContent = `${idx + 1} / ${comicPages.length}`;
+    comicPrevBtn.disabled = idx === 0;
+    comicNextBtn.disabled = idx === comicPages.length - 1;
+  }
+
+  pageFlip.on('flip', e => { currentPageIdx = e.data; updateControls(e.data); });
+  pageFlip.on('init', () => setTimeout(() => { currentPageIdx = pageFlip.getCurrentPageIndex(); updateControls(currentPageIdx); }, 60));
+
+  comicPrevBtn.addEventListener('click', () => { if (!comicPrevBtn.disabled) pageFlip.flipPrev(); });
+  comicNextBtn.addEventListener('click', () => { if (!comicNextBtn.disabled) pageFlip.flipNext(); });
+
+  // MAXIMIZE / ZOOM
+  document.getElementById('comicMaximize').addEventListener('click', openZoom);
+
+  function openZoom() {
+    const overlay = document.getElementById('flipbookOverlay');
+    const zoomEl  = document.getElementById('flipbookZoom');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    zoomEl.innerHTML = '';
+
+    // Calculate max page size that fits 88% wide × 80% tall in double-spread view
+    const availW = window.innerWidth  * 0.88;
+    const availH = window.innerHeight * 0.80;
+    let pH = Math.min(availH, (availW / 2) * (529 / 353));
+    let pW = pH * (353 / 529);
+    if (pW * 2 > availW) { pW = availW / 2; pH = pW * (529 / 353); }
+
+    comicPages.forEach((src, i) => {
+      const div = document.createElement('div');
+      div.className = 'stf-page-content';
+      const img = document.createElement('img');
+      img.src = src; img.alt = 'Comic page ' + (i + 1); img.draggable = false;
+      div.appendChild(img); zoomEl.appendChild(div);
+    });
+
+    zoomFlip = new St.PageFlip(zoomEl, {
+      width: Math.round(pW), height: Math.round(pH),
+      size: 'fixed', drawShadow: true, flippingTime: 1200,
+      usePortrait: false, showCover: false, startZIndex: 0,
+      maxShadowOpacity: 0.18, mobileScrollSupport: false,
+      swipeDistance: 20, clickEventForward: true,
+    });
+    zoomFlip.loadFromHTML(zoomEl.querySelectorAll('.stf-page-content'));
+
+    const zoomPageNum = document.getElementById('zoomPageNum');
+    const zoomPrevBtn = document.getElementById('zoomPrev');
+    const zoomNextBtn = document.getElementById('zoomNext');
+
+    function updateZoom(idx) {
+      zoomPageNum.textContent = `${idx + 1} / ${comicPages.length}`;
+      zoomPrevBtn.disabled = idx === 0;
+      zoomNextBtn.disabled = idx === comicPages.length - 1;
+    }
+
+    zoomFlip.on('flip', e => { currentPageIdx = e.data; updateZoom(e.data); });
+    zoomFlip.on('init', () => setTimeout(() => {
+      if (currentPageIdx > 0) zoomFlip.turnToPage(currentPageIdx);
+      updateZoom(zoomFlip.getCurrentPageIndex());
+    }, 80));
+
+    zoomPrevBtn.onclick = () => { if (!zoomPrevBtn.disabled) zoomFlip.flipPrev(); };
+    zoomNextBtn.onclick = () => { if (!zoomNextBtn.disabled) zoomFlip.flipNext(); };
+  }
+
+  document.getElementById('flipbookOverlayClose').addEventListener('click', () => {
+    document.getElementById('flipbookOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+    if (zoomFlip) {
+      currentPageIdx = zoomFlip.getCurrentPageIndex();
+      if (currentPageIdx > 0) pageFlip.turnToPage(currentPageIdx);
+      updateControls(currentPageIdx);
+      document.getElementById('flipbookZoom').innerHTML = '';
+      zoomFlip = null;
+    }
+  });
+
+  flipbookEl.addEventListener('dblclick', () => {
+    openLightbox(comicPages[pageFlip.getCurrentPageIndex()]);
+  });
+
+  function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  document.getElementById('lightboxClose').addEventListener('click', () => {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  });
+
+  document.getElementById('intangiblesBox').addEventListener('click', () => {
+    openLightbox(document.querySelector('#intangiblesBox img').src);
+  });
+
+  document.getElementById('duoImg1').addEventListener('click', () => openLightbox(document.getElementById('duoImg1').src));
+  document.getElementById('duoImg2').addEventListener('click', () => openLightbox(document.getElementById('duoImg2').src));
+  document.getElementById('unc55Box').addEventListener('click', () => openLightbox(document.querySelector('#unc55Box img').src));
+
+  // COMIC BOOK 2
+  const comicPages2 = [
+    'images/projects/05-oakland-homeless/15_1_SorianoK_Page_01_Image_0001.png',
+    'images/projects/05-oakland-homeless/15_1_SorianoK_Page_02_Image_0001.png',
+    'images/projects/05-oakland-homeless/15_1_SorianoK_Page_03_Image_0001.png',
+    'images/projects/05-oakland-homeless/15_1_SorianoK_Page_04_Image_0001.png',
+    'images/projects/05-oakland-homeless/15_1_SorianoK_Page_05_Image_0001.png',
+    'images/projects/05-oakland-homeless/15_1_SorianoK_Page_06_Image_0001.png',
+    'images/projects/05-oakland-homeless/15_1_SorianoK_Page_07_Image_0001.png',
+    'images/projects/05-oakland-homeless/15_1_SorianoK_Page_08_Image_0001.png',
+    'images/projects/05-oakland-homeless/15_1_SorianoK_Page_09_Image_0001.png',
+    'images/projects/05-oakland-homeless/15_1_SorianoK_Page_10_Image_0001.png',
+  ];
+
+  const comicPageNum2 = document.getElementById('comicPageNum2');
+  const comicPrevBtn2 = document.getElementById('comicPrev2');
+  const comicNextBtn2 = document.getElementById('comicNext2');
+  const flipbookEl2   = document.getElementById('flipbook2');
+
+  comicPages2.forEach((src, i) => {
+    const page = document.createElement('div');
+    page.className = 'stf-page-content';
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Comic page ' + (i + 1);
+    img.draggable = false;
+    page.appendChild(img);
+    flipbookEl2.appendChild(page);
+  });
+
+  let currentPageIdx2 = 0;
+  let zoomFlip2 = null;
+
+  const pageFlip2 = new St.PageFlip(flipbookEl2, {
+    width:               353,
+    height:              529,
+    size:                'fixed',
+    drawShadow:          true,
+    flippingTime:        1200,
+    usePortrait:         true,
+    showCover:           false,
+    startZIndex:         0,
+    maxShadowOpacity:    0.18,
+    mobileScrollSupport: false,
+    swipeDistance:       20,
+    clickEventForward:   true,
+  });
+
+  pageFlip2.loadFromHTML(flipbookEl2.querySelectorAll('.stf-page-content'));
+
+  function updateControls2(idx) {
+    comicPageNum2.textContent = `${idx + 1} / ${comicPages2.length}`;
+    comicPrevBtn2.disabled = idx === 0;
+    comicNextBtn2.disabled = idx === comicPages2.length - 1;
+  }
+
+  pageFlip2.on('flip', e => { currentPageIdx2 = e.data; updateControls2(e.data); });
+  pageFlip2.on('init', () => setTimeout(() => { currentPageIdx2 = pageFlip2.getCurrentPageIndex(); updateControls2(currentPageIdx2); }, 60));
+
+  comicPrevBtn2.addEventListener('click', () => { if (!comicPrevBtn2.disabled) pageFlip2.flipPrev(); });
+  comicNextBtn2.addEventListener('click', () => { if (!comicNextBtn2.disabled) pageFlip2.flipNext(); });
+
+  document.getElementById('comicMaximize2').addEventListener('click', openZoom2);
+
+  function openZoom2() {
+    const overlay = document.getElementById('flipbookOverlay2');
+    const zoomEl  = document.getElementById('flipbookZoom2');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    zoomEl.innerHTML = '';
+
+    const availW = window.innerWidth  * 0.88;
+    const availH = window.innerHeight * 0.80;
+    let pH = Math.min(availH, (availW / 2) * (529 / 353));
+    let pW = pH * (353 / 529);
+    if (pW * 2 > availW) { pW = availW / 2; pH = pW * (529 / 353); }
+
+    comicPages2.forEach((src, i) => {
+      const div = document.createElement('div');
+      div.className = 'stf-page-content';
+      const img = document.createElement('img');
+      img.src = src; img.alt = 'Comic page ' + (i + 1); img.draggable = false;
+      div.appendChild(img); zoomEl.appendChild(div);
+    });
+
+    zoomFlip2 = new St.PageFlip(zoomEl, {
+      width: Math.round(pW), height: Math.round(pH),
+      size: 'fixed', drawShadow: true, flippingTime: 1200,
+      usePortrait: false, showCover: false, startZIndex: 0,
+      maxShadowOpacity: 0.18, mobileScrollSupport: false,
+      swipeDistance: 20, clickEventForward: true,
+    });
+    zoomFlip2.loadFromHTML(zoomEl.querySelectorAll('.stf-page-content'));
+
+    const zoomPageNum2 = document.getElementById('zoomPageNum2');
+    const zoomPrevBtn2 = document.getElementById('zoomPrev2');
+    const zoomNextBtn2 = document.getElementById('zoomNext2');
+
+    function updateZoom2(idx) {
+      zoomPageNum2.textContent = `${idx + 1} / ${comicPages2.length}`;
+      zoomPrevBtn2.disabled = idx === 0;
+      zoomNextBtn2.disabled = idx === comicPages2.length - 1;
+    }
+
+    zoomFlip2.on('flip', e => { currentPageIdx2 = e.data; updateZoom2(e.data); });
+    zoomFlip2.on('init', () => setTimeout(() => {
+      if (currentPageIdx2 > 0) zoomFlip2.turnToPage(currentPageIdx2);
+      updateZoom2(zoomFlip2.getCurrentPageIndex());
+    }, 80));
+
+    zoomPrevBtn2.onclick = () => { if (!zoomPrevBtn2.disabled) zoomFlip2.flipPrev(); };
+    zoomNextBtn2.onclick = () => { if (!zoomNextBtn2.disabled) zoomFlip2.flipNext(); };
+  }
+
+  document.getElementById('flipbookOverlayClose2').addEventListener('click', () => {
+    document.getElementById('flipbookOverlay2').classList.remove('open');
+    document.body.style.overflow = '';
+    if (zoomFlip2) {
+      currentPageIdx2 = zoomFlip2.getCurrentPageIndex();
+      if (currentPageIdx2 > 0) pageFlip2.turnToPage(currentPageIdx2);
+      updateControls2(currentPageIdx2);
+      document.getElementById('flipbookZoom2').innerHTML = '';
+      zoomFlip2 = null;
+    }
+  });
+
+  flipbookEl2.addEventListener('dblclick', () => {
+    openLightbox(comicPages2[pageFlip2.getCurrentPageIndex()]);
+  });
+
+  // Modal
+  function openModal() { document.getElementById('modalOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; } });
+  document.querySelectorAll('[data-modal]').forEach(el => el.addEventListener('click', e => { e.preventDefault(); openModal(); }));
+
+</script>
+</body>
+</html>
