@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Résumé — Kendryx Soriano</title>
-  <link rel="icon" type="image/png" href="favicon.png">
+  <title>About Me — Kendryx Soriano</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -26,7 +26,7 @@
       backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(0,0,0,0.07); z-index: 100;
     }
-    .nav-logo { font-size: 25px; font-weight: 700; letter-spacing: -0.02em; color: var(--black); text-decoration: none; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
+    .nav-logo { font-size: 25px; font-weight: 600; letter-spacing: -0.02em; color: var(--black); text-decoration: none; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
     .nav-logo:hover { color: var(--grey); transform: translateY(-2px); }
     .nav-links { display: flex; gap: 36px; list-style: none; }
     .nav-links a { font-family: "neue-haas-grotesk-display-pr", sans-serif; font-size: 13px; font-weight: 500; font-style: normal; letter-spacing: 0.05em; color: var(--black); text-decoration: none; display: inline-block; transition: color 0.3s ease, transform 0.3s ease; }
@@ -41,55 +41,70 @@
     .mobile-menu a { font-size: 18px; font-weight: 300; color: var(--black); text-decoration: none; letter-spacing: 0.01em; transition: color 0.3s ease; }
     .mobile-menu a:hover { color: var(--grey); }
 
-    /* PAGE HEADER */
-    .page-header {
-      padding: calc(var(--nav-h) + 80px) 40px 60px;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-    }
-    .page-header h1 {
-      font-size: clamp(40px, 7vw, 88px);
-      font-weight: 300; letter-spacing: -0.03em; line-height: 1;
+    /* ABOUT LAYOUT */
+    .about-page { padding-top: var(--nav-h); display: flex; flex-direction: column; min-height: 100vh; }
+
+    .about-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      flex: 1;
+      padding: 80px 60px;
+      align-items: start;
     }
 
-    /* RESUME CONTENT */
-    .resume-content {
+    .about-left {
+      padding-right: 80px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 80px 40px 100px;
+      min-height: 480px;
     }
 
-    .resume-image-box {
-      width: 100%;
-      max-width: 720px;
-      aspect-ratio: 8.5 / 11;
-      border: 1px solid rgba(0,0,0,0.1);
-      overflow: hidden;
+    .about-heading {
+      font-size: clamp(24px, 2.8vw, 36px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-bottom: 36px;
     }
 
-    .resume-pdf {
+    .about-body {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.55;
+      color: rgba(0,0,0,0.75);
+      text-align: justify;
+      max-width: 480px;
+      margin-top: 32px;
+    }
+
+    .about-cta {
+      font-size: clamp(22px, 2.6vw, 34px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.25;
+      margin-top: 36px;
+    }
+    .about-cta-link {
+      display: inline-block;
+      cursor: pointer;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .about-cta-link:hover {
+      color: var(--grey);
+      transform: translateY(-3px);
+    }
+
+    .about-right {}
+
+    .about-photo {
       width: 100%;
-      height: 100%;
-      border: none;
+      aspect-ratio: 4/3;
+      background-image: url('about-photo.jpg');
+      background-size: 85%;
+      background-position: center top;
+      background-repeat: no-repeat;
       display: block;
     }
-
-    .download-btn {
-      margin-top: 32px;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      font-family: var(--font);
-      color: var(--black);
-      text-decoration: none;
-      border: 1px solid var(--black);
-      padding: 12px 24px;
-      transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
-    }
-    .download-btn:hover { background: var(--black); color: #fff; transform: translateY(-2px); }
 
     /* FOOTER */
     footer { padding: 28px 40px; border-top: 1px solid rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
@@ -102,12 +117,17 @@
     .footer-email:hover { color: var(--black); transform: translateY(-3px); }
 
     /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .about-main { grid-template-columns: 1fr; padding: 60px 40px; gap: 48px; }
+      .about-left { padding-right: 0; min-height: auto; }
+      .about-cta { margin-top: 48px; }
+      .about-photo { aspect-ratio: 4/3; }
+    }
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
       .nav-links { display: none; }
       .hamburger { display: flex; }
-      .page-header { padding: calc(var(--nav-h) + 40px) 20px 40px; }
-      .resume-content { padding: 48px 20px 64px; }
+      .about-main { padding: 48px 20px; }
       footer { flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 28px 20px; }
     }
   
@@ -267,12 +287,12 @@
 <div class="page-veil"></div>
 
 <nav>
-  <a class="nav-logo" href="index.html">Kendryx Soriano</a>
+  <a class="nav-logo" href="/">Kendryx Soriano</a>
   <ul class="nav-links">
-    <li><a href="works.html">Works</a></li>
-    <li><a href="portfolio.html">Portfolio</a></li>
-    <li><a href="about.html">About Me</a></li>
-    <li><a href="resume.html">Résumé</a></li>
+    <li><a href="/works">Works</a></li>
+    <li><a href="/portfolio">Portfolio</a></li>
+    <li><a href="/about">About Me</a></li>
+    <li><a href="/resume">Résumé</a></li>
     <li><a href="#" data-modal>Let's Talk</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -281,46 +301,53 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="works.html">Works</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="about.html">About Me</a>
-  <a href="resume.html">Résumé</a>
+  <a href="/works">Works</a>
+  <a href="/portfolio">Portfolio</a>
+  <a href="/about">About Me</a>
+  <a href="/resume">Résumé</a>
   <a href="#" data-modal>Let's Talk</a>
 </div>
 
-<div class="page-header">
-  <h1>Résumé/</h1>
-</div>
+<div class="about-page">
+  <div class="about-main">
 
-<div class="resume-content">
-  <div class="resume-image-box">
-    <iframe class="resume-pdf" src="Kenny_Soriano_Resume.pdf" title="Résumé"></iframe>
-  </div>
-  <a class="download-btn" href="Kenny_Soriano_Resume.pdf" download>↓ Download PDF</a>
-</div>
+    <div class="about-left">
+      <div>
+        <h1 class="about-heading">Hi, I'm Kenny, an aspiring architectural designer based in San Francisco.</h1>
+        <p class="about-body">Born and raised in Manila, Philippines, I studied architecture at the Academy of Art University in San Francisco while competing in collegiate soccer. My work is driven by collaboration, curiosity, and the belief that meaningful architecture begins with understanding the people it is designed for. <em>Good design is progressive. Great design is inclusive.</em></p>
+      </div>
+      <p class="about-cta">Let's get to know each other. <span class="about-cta-link" data-modal>Get in touch.</span></p>
+    </div>
 
-<footer>
-  <span class="footer-copy">© 2026 Kendryx Soriano</span>
-  <div class="footer-socials">
-    <a href="https://www.instagram.com/kendryxsoriano/" target="_blank" aria-label="Instagram">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-        <circle cx="12" cy="12" r="4"/>
-        <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
-      </svg>
-    </a>
-    <a href="https://www.linkedin.com/in/kendryxsoriano" target="_blank" aria-label="LinkedIn">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="2" y="2" width="20" height="20" rx="3"/>
-        <line x1="8" y1="10" x2="8" y2="17"/>
-        <line x1="8" y1="7" x2="8" y2="7.5"/>
-        <line x1="12" y1="17" x2="12" y2="13"/>
-        <path d="M12 13a3 3 0 0 1 6 0v4"/>
-      </svg>
-    </a>
+    <div class="about-right">
+      <div class="about-photo"></div>
+    </div>
+
   </div>
-  <a class="footer-email" href="mailto:kendryxsoriano@gmail.com">kendryxsoriano@gmail.com</a>
-</footer>
+
+  <footer>
+    <span class="footer-copy">© 2026 Kendryx Soriano</span>
+    <div class="footer-socials">
+      <a href="https://www.instagram.com/kendryxsoriano/" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+        </svg>
+      </a>
+      <a href="https://www.linkedin.com/in/kendryxsoriano" target="_blank" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="3"/>
+          <line x1="8" y1="10" x2="8" y2="17"/>
+          <line x1="8" y1="7" x2="8" y2="7.5"/>
+          <line x1="12" y1="17" x2="12" y2="13"/>
+          <path d="M12 13a3 3 0 0 1 6 0v4"/>
+        </svg>
+      </a>
+    </div>
+    <a class="footer-email" href="mailto:kendryxsoriano@gmail.com">kendryxsoriano@gmail.com</a>
+  </footer>
+</div>
 
 <script>
   const hamburger = document.getElementById('hamburger');

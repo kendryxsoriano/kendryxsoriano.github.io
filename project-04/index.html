@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>01/ Healing Haven — Kendryx Soriano</title>
-  <link rel="icon" type="image/png" href="favicon.png">
+  <title>04/ Micro-Metamorphosis — Kendryx Soriano</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -14,8 +14,6 @@
       --black: #111;
       --grey: #999;
     }
-
-    html { scroll-behavior: smooth; }
 
     body { font-family: var(--font); color: var(--black); background: #fff; overflow-x: hidden; }
 
@@ -83,7 +81,7 @@
     }
 
     .statement-text {
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 400;
       line-height: 1.55;
       color: rgba(0,0,0,0.75);
@@ -120,6 +118,24 @@
       color: var(--black);
       letter-spacing: 0.01em;
     }
+
+    .meta-note {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--grey);
+      letter-spacing: 0.01em;
+      padding-top: 14px;
+      line-height: 1.5;
+    }
+
+    .meta-note a {
+      color: var(--black);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      display: inline-block;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .meta-note a:hover { color: var(--grey); transform: translateY(-2px); }
 
     /* SLIDESHOW */
     .slideshow-wrapper {
@@ -377,12 +393,12 @@
 <div class="page-veil"></div>
 
 <nav>
-  <a class="nav-logo" href="index.html">Kendryx Soriano</a>
+  <a class="nav-logo" href="/">Kendryx Soriano</a>
   <ul class="nav-links">
-    <li><a href="works.html">Works</a></li>
-    <li><a href="portfolio.html">Portfolio</a></li>
-    <li><a href="about.html">About Me</a></li>
-    <li><a href="resume.html">Résumé</a></li>
+    <li><a href="/works">Works</a></li>
+    <li><a href="/portfolio">Portfolio</a></li>
+    <li><a href="/about">About Me</a></li>
+    <li><a href="/resume">Résumé</a></li>
     <li><a href="#" data-modal>Let's Talk</a></li>
   </ul>
   <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -391,46 +407,47 @@
 </nav>
 
 <div class="mobile-menu" id="mobileMenu">
-  <a href="works.html">Works</a>
-  <a href="portfolio.html">Portfolio</a>
-  <a href="about.html">About Me</a>
-  <a href="resume.html">Résumé</a>
+  <a href="/works">Works</a>
+  <a href="/portfolio">Portfolio</a>
+  <a href="/about">About Me</a>
+  <a href="/resume">Résumé</a>
   <a href="#" data-modal>Let's Talk</a>
 </div>
 
 <!-- PROJECT HEADER -->
 <div class="project-header">
-  <h1 class="project-title">01/ Healing Haven</h1>
-  <p class="project-caption">An open space urban oasis</p>
+  <h1 class="project-title">04/ Micro-Metamorphosis</h1>
+  <p class="project-caption">Collaborative Project</p>
 </div>
 
 <!-- INFO -->
 <div class="project-info">
   <div class="project-statement">
     <p class="statement-label">Statement</p>
-    <p class="statement-text">This project addresses the San Francisco Bay Area's housing crisis by proposing an affordable housing complex near Lake Merritt in Oakland, designed for nurses and medical students. The site, chosen for its proximity to medical facilities, supports the project's mission to serve underserved demographics while fostering a supportive living environment. A stepped massing strategy, informed by site and climate analysis, optimizes natural light, mitigates shadows, and reduces cold winter winds. The design integrates terraces and balconies to promote open spaces and enhance community interaction. Additionally, the "broken donut" layout improves cross-ventilation, maximizes views of Lake Merritt, and balances functionality with aesthetic charm.</p>
+    <p class="statement-text">This project involved designing and constructing folding beds and multifunctional furniture for an elementary school in San Francisco's Mission District, which also serves as a family shelter after hours. A collaboration between the Academy of Art University School of Architecture and BVHM Community School, it blended design, social impact, and community engagement. The focus shifted toward assembling 69 folding beds to meet the shelter's needs. Initially assigned to create a storage-bench unit, the team instead prioritized bed assembly to ensure timely use by families. This shift highlighted the importance of adaptability and teamwork in socially driven design. The experience reinforced the role of hands-on architecture in addressing real-world challenges.</p>
   </div>
   <div class="project-meta">
     <div class="meta-row">
       <span class="meta-key">Course</span>
-      <span class="meta-val">ARH 450: Integrated Systems</span>
+      <span class="meta-val">ARH 498: B.Lab Stay-Over Program</span>
     </div>
     <div class="meta-row">
-      <span class="meta-key">Instructor</span>
-      <span class="meta-val">Paul Adamson & Kuotting Luo</span>
+      <span class="meta-key">Instructors</span>
+      <span class="meta-val">Sameena Sitabkhan and Karen Seong</span>
     </div>
     <div class="meta-row">
       <span class="meta-key">Semester</span>
-      <span class="meta-val">Fall 2024</span>
+      <span class="meta-val">Fall 2023</span>
     </div>
     <div class="meta-row">
       <span class="meta-key">Team Members</span>
-      <span class="meta-val">Amanda Estrada</span>
+      <span class="meta-val">Amanda Estrada, Giewel David, Kim Ebueng, Drew Hart, Lowai Ghaly, Mazen Ghaly, Mohamed Meawad</span>
     </div>
     <div class="meta-row">
       <span class="meta-key">Site</span>
-      <span class="meta-val">Oakland, California, US</span>
+      <span class="meta-val">Buena Vista Horace-Mann Community School, San Francisco, California</span>
     </div>
+    <p class="meta-note">To know more about the Stay Over Program Mobile Folding Beds <a href="https://2024springshow.academyart.edu/schools/architecture/projects/stay-over-program-mobile-folding-beds/" target="_blank">click here.</a></p>
   </div>
 </div>
 
@@ -438,73 +455,25 @@
 <div class="slideshow-wrapper">
   <div class="slideshow-track" id="track">
     <div class="slide" data-caption="">
-      <img src="images/oakland/IMG_1599.JPG" alt="Healing Haven – Exterior Rendering" />
-    </div>
-    <div class="slide" data-caption="Intangibles">
-      <img src="images/projects/01-healing-haven/Collage.jpg" alt="Healing Haven – Collage" />
+      <img src="/images/projects/04-micrometamorphosis/01.jpg" alt="Micro-Metamorphosis 01" />
     </div>
     <div class="slide" data-caption="">
-      <img src="images/projects/01-healing-haven/IMG_1597.jpg" alt="Healing Haven – Interior View" />
-    </div>
-    <div class="slide" data-caption="Historical Analysis">
-      <img src="images/projects/01-healing-haven/Historical%20Analysis.jpg" alt="Healing Haven – Historical Analysis" />
-    </div>
-    <div class="slide" data-caption="Concept Diagram Sketch">
-      <img src="images/covers/IMG_1561.JPG" alt="Healing Haven – Image 5" />
-    </div>
-    <div class="slide" data-caption="Early Facade Concept Sketch">
-      <img src="images/covers/IMG_1564.JPG" alt="Healing Haven – Image 6" />
-    </div>
-    <div class="slide" data-caption="Early Facade Concept Sketch">
-      <img src="images/covers/IMG_1565.JPG" alt="Healing Haven – Image 7" />
+      <img src="/images/projects/04-micrometamorphosis/02.jpg" alt="Micro-Metamorphosis 02" />
     </div>
     <div class="slide" data-caption="">
-      <img src="images/projects/01-healing-haven/5.jpg" alt="Healing Haven – Courtyard View" />
+      <img src="/images/projects/04-micrometamorphosis/03.jpg" alt="Micro-Metamorphosis 03" />
     </div>
     <div class="slide" data-caption="">
-      <img src="images/covers/IMG_1600.JPG" alt="Healing Haven – Image 9" />
-    </div>
-    <div class="slide" data-caption="Circulation Diagram">
-      <img src="images/projects/01-healing-haven/Circulation.jpg" alt="Healing Haven – Circulation" />
+      <img src="/images/projects/04-micrometamorphosis/04.jpg" alt="Micro-Metamorphosis 04" />
     </div>
     <div class="slide" data-caption="">
-      <img src="images/projects/01-healing-haven/4.jpg" alt="Healing Haven – View 4" />
-    </div>
-    <div class="slide" data-caption="Diagrammatic Strategies">
-      <img src="images/projects/01-healing-haven/Diagrammatic%20Strategies.jpg" alt="Healing Haven – Diagrammatic Strategies" />
-    </div>
-    <div class="slide" data-caption="Sectional Perspective">
-      <img src="images/projects/01-healing-haven/Sectional.png" alt="Healing Haven – Sectional" />
-    </div>
-    <div class="slide" data-caption="Level 1 and 3 Floor Plans">
-      <img src="images/projects/01-healing-haven/L1%20and%20L3.png" alt="Healing Haven – L1 and L3 Plans" />
-    </div>
-    <div class="slide" data-caption="Level 5 and 7 Floor Plans">
-      <img src="images/projects/01-healing-haven/L5%20and%20L7.png" alt="Healing Haven – L5 and L7 Plans" />
+      <img src="/images/projects/04-micrometamorphosis/05.jpg" alt="Micro-Metamorphosis 05" />
     </div>
     <div class="slide" data-caption="">
-      <img src="images/projects/01-healing-haven/6.jpg" alt="Healing Haven – View 6" />
-    </div>
-    <div class="slide" data-caption="North Facing Section">
-      <img src="images/projects/01-healing-haven/North%20Facing%20Section.jpg" alt="Healing Haven – North Facing Section" />
-    </div>
-    <div class="slide" data-caption="West Facing Section">
-      <img src="images/projects/01-healing-haven/West%20Facing%20Section.jpg" alt="Healing Haven – West Facing Section" />
-    </div>
-    <div class="slide" data-caption="Units">
-      <img src="images/projects/01-healing-haven/Units.jpg" alt="Healing Haven – Units" />
+      <img src="/images/projects/04-micrometamorphosis/06.jpg" alt="Micro-Metamorphosis 06" />
     </div>
     <div class="slide" data-caption="">
-      <img src="images/projects/01-healing-haven/7.jpg" alt="Healing Haven – View 7" />
-    </div>
-    <div class="slide" data-caption="">
-      <img src="images/projects/01-healing-haven/8.jpg" alt="Healing Haven – View 8" />
-    </div>
-    <div class="slide" data-caption="">
-      <img src="images/projects/01-healing-haven/9.jpg" alt="Healing Haven – View 9" />
-    </div>
-    <div class="slide" data-caption="">
-      <img src="images/covers/IMG_1592.JPG" alt="Healing Haven – Image 23" />
+      <img src="/images/projects/04-micrometamorphosis/07.jpg" alt="Micro-Metamorphosis 07" />
     </div>
   </div>
 
@@ -523,8 +492,8 @@
 <div class="slide-caption" id="slideCaption"></div>
 
 <div class="project-nav">
-  <a class="back-link" href="works.html">← Back to Works</a>
-  <a class="next-link" href="project-02.html">Next Project →</a>
+  <a class="back-link" href="/works">← Back to Works</a>
+  <a class="next-link" href="/project-05">Next Project →</a>
 </div>
 
 <!-- LIGHTBOX -->
