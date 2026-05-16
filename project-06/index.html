@@ -285,8 +285,8 @@
     /* ── DESIGN TOUCHUP ─────────────────────────── */
     .page-veil { position: fixed; inset: 0; background: #fff; z-index: 9990; pointer-events: none; animation: veilOut 0.55s ease forwards; }
     @keyframes veilOut { to { opacity: 0; visibility: hidden; } }
-    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
-    .reveal.in { opacity: 1; transform: translateY(0); }
+    .reveal { opacity: 0; transform: translateY(28px); }
+    .reveal.in { opacity: 1; transform: translateY(0); transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
   </style>
 </head>
 <body>
